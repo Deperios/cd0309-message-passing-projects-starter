@@ -18,7 +18,8 @@ Vagrant.configure("2") do |config|
     master.vm.box = "generic/ubuntu2204"
     master.vm.boot_timeout = 900
     master.vm.hostname = "master"
-    master.vm.network 'private_network', ip: "192.168.0.200",  virtualbox__intnet: true
+    #master.vm.network 'private_network', ip: "192.168.0.200",  virtualbox__intnet: true
+    master.vm.network "private_network", ip: "192.168.56.10"
     master.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: true
     master.vm.network "forwarded_port", guest: 22, host: 2000 # Master Node SSH
     master.vm.network "forwarded_port", guest: 6443, host: 6443 # API Access
