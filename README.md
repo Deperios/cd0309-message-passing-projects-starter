@@ -150,3 +150,48 @@ Your architecture diagram should focus on the services and how they talk to one 
 ## Tips
 * We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
 * The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
+
+## Microservices Architecture
+
+This project has been refactored into a microservice architecture:
+
+- **API Service (REST)**: Handles external client requests.
+- **Ingestion Service (Kafka Producer)**: Receives incoming location data.
+- **Data Service (Kafka Consumer)**: Processes and stores data in PostgreSQL.
+- **Location Service (gRPC)**: Computes proximity between users.
+
+### Communication
+
+- REST → External communication
+- gRPC → Internal service-to-service communication
+- Kafka → Asynchronous data ingestion
+
+---
+
+## How to Run
+
+1. Start the cluster:
+```bash
+vagrant up
+
+2. Apply Kubernetes configs:
+
+kubectl apply -f deployment/
+
+3. Check services:
+
+kubectl get pods
+kubectl get services
+
+## Access the Application
+
+Once the services are running, you can access:
+
+- Frontend Application:
+  http://localhost:30000
+
+- API Documentation (OpenAPI):
+  http://localhost:30001
+
+- API Base Endpoint:
+  http://localhost:30001/api/
