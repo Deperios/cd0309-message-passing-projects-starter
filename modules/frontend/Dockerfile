@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM node:24.1.0-alpine
 
 WORKDIR .
 
