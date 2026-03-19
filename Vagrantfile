@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
     master.vm.box = "generic/ubuntu2204"
     master.vm.boot_timeout = 900
     master.vm.hostname = "master"
+    master.vm.synced_folder ".", "/vagrant"
     #master.vm.network 'private_network', ip: "192.168.0.200",  virtualbox__intnet: true
     master.vm.network "private_network", ip: "192.168.56.10"
     master.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
