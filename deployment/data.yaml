@@ -12,6 +12,8 @@ spec:
       labels:
         app: data
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: data
           image: deperios/data

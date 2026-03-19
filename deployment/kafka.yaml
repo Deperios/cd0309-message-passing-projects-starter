@@ -60,6 +60,8 @@ spec:
       labels:
         app: zookeeper
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: zookeeper
           image: bitnami/zookeeper:latest

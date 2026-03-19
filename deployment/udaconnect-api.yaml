@@ -30,6 +30,8 @@ spec:
       labels:
         service: udaconnect-api
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
       - image: deperios/udaconnect-api:latest
         name: udaconnect-api
