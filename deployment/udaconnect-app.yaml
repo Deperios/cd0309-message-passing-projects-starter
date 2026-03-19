@@ -33,7 +33,7 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-      - image: deperios/udaconnect-app:latest
+      - image: deperios/udaconnect-frontend
         name: udaconnect-app
         imagePullPolicy: Always
         resources:

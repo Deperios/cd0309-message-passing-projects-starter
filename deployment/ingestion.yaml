@@ -16,4 +16,4 @@ spec:
         - name: regcred
       containers:
         - name: ingestion
-          image: deperios/ingestion
+          image: deperios/udaconnect-ingestion

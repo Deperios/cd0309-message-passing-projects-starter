@@ -16,4 +16,4 @@ spec:
         - name: regcred
       containers:
         - name: data
-          image: deperios/data
+          image: deperios/udaconnect-data
