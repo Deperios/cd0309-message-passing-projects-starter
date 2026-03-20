@@ -12,7 +12,7 @@ class LocationService(location_pb2_grpc.LocationServiceServicer):
             host=os.environ.get("DB_HOST"),
             database=os.environ.get("DB_NAME"),
             user=os.environ.get("DB_USERNAME"),
-            password=os.environ.get("DB_PASSWORD")
+            password=os.environ.get("DB_PASSWORD"),
             port=5432
         )
         cursor = conn.cursor()
