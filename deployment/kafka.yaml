@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka:3.4.0
+          image: bitnami/kafka:3.4.0-debian-11-r0
           ports:
             - containerPort: 9092
           env:
@@ -64,7 +64,7 @@ spec:
         - name: regcred
       containers:
         - name: zookeeper
-          image: bitnami/zookeeper:3.8.1
+          image: bitnami/zookeeper:3.8.1-debian-11-r0
           ports:
             - containerPort: 2181
           env:
