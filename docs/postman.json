@@ -1,0 +1,66 @@
+{
+"info": {
+"name": "UdaConnect API",
+"_postman_id": "12345678-1234-1234-1234-123456789012",
+"description": "Postman collection for UdaConnect microservices project",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
+"item": [
+{
+"name": "Get All Persons",
+"request": {
+"method": "GET",
+"header": [],
+"url": {
+"raw": "http://localhost:30001/api/persons",
+"protocol": "http",
+"host": ["localhost"],
+"port": "30001",
+"path": ["api", "persons"]
+}
+}
+},
+{
+"name": "Get Person by ID",
+"request": {
+"method": "GET",
+"header": [],
+"url": {
+"raw": "http://localhost:30001/api/persons/1",
+"protocol": "http",
+"host": ["localhost"],
+"port": "30001",
+"path": ["api", "persons", "1"]
+}
+}
+},
+{
+"name": "Get Person Connections",
+"request": {
+"method": "GET",
+"header": [],
+"url": {
+"raw": "http://localhost:30001/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-31&distance=5",
+"protocol": "http",
+"host": ["localhost"],
+"port": "30001",
+"path": ["api", "persons", "1", "connection"],
+"query": [
+{
+"key": "start_date",
+"value": "2020-01-01"
+},
+{
+"key": "end_date",
+"value": "2020-12-31"
+},
+{
+"key": "distance",
+"value": "5"
+}
+]
+}
+}
+}
+]
+}

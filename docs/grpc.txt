@@ -1,23 +1,56 @@
-==============================
-ARCHITECTURE DECISIONS
-==============================
+# gRPC Service Documentation
 
-1. REST (API Service)
-------------------------------
-REST is used as the external interface because it is simple, widely supported, 
-and fast to implement. This aligns with the requirement to deliver a Minimum 
-Viable Product (MVP) within a short timeframe and with a limited budget.
+## Service: LocationService
 
+This service provides location data for a given person within a date range.
 
-2. gRPC (Location Service)
-------------------------------
-gRPC is used for internal communication between services because it provides 
-high performance and low latency. This is important for efficiently processing 
-location proximity calculations at scale.
+### Endpoint
 
+GetLocations(LocationRequest) returns (LocationResponse)
 
-3. Kafka (Ingestion + Data Service)
-------------------------------
-Kafka is used to handle high-volume data ingestion asynchronously, allowing 
-the system to scale and process large amounts of location data without 
-overwhelming the services.
+### Request Message
+
+* person_id (int): ID of the person
+* start_date (string): Start date (YYYY-MM-DD)
+* end_date (string): End date (YYYY-MM-DD)
+
+### Response Message
+
+* locations (list): List of Location objects containing:
+
+  * person_id
+  * longitude
+  * latitude
+  * creation_time
+
+---
+
+## Example Python Client
+
+```python
+import grpc
+import location_pb2
+import location_pb2_grpc
+
+channel = grpc.insecure_channel('location-service:50051')
+stub = location_pb2_grpc.LocationServiceStub(channel)
+
+request = location_pb2.LocationRequest(
+    person_id=1,
+    start_date="2020-01-01",
+    end_date="2020-12-31"
+)
+
+response = stub.GetLocations(request)
+
+for loc in response.locations:
+    print(loc)
+```
+
+---
+
+## Notes
+
+* The gRPC server runs on port 50051 inside the Kubernetes cluster.
+* The service name `location-service` is resolved via Kubernetes DNS.
+* This service replaces direct database access from the API service.
