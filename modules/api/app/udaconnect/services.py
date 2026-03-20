@@ -26,11 +26,7 @@ class ConnectionService:
         large datasets. This is by design: what are some ways or techniques to help make this data integrate more
         smoothly for a better user experience for API consumers?
         """
-        locations = LocationService.get_locations(person_id, start_date, end_date).filter(
-            Location.person_id == person_id
-        ).filter(Location.creation_time < end_date).filter(
-            Location.creation_time >= start_date
-        ).all()
+        locations = LocationService.get_locations(person_id, start_date, end_date)
 
         # Cache all users in memory for quick lookup
         person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
