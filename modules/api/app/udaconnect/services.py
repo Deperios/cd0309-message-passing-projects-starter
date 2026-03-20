@@ -1,3 +1,6 @@
+import grpc
+import location_pb2
+import location_pb2_grpc
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
@@ -23,7 +26,7 @@ class ConnectionService:
         large datasets. This is by design: what are some ways or techniques to help make this data integrate more
         smoothly for a better user experience for API consumers?
         """
-        locations: List = db.session.query(Location).filter(
+        locations = LocationService.get_locations(person_id, start_date, end_date).filter(
             Location.person_id == person_id
         ).filter(Location.creation_time < end_date).filter(
             Location.creation_time >= start_date
@@ -83,16 +86,18 @@ class ConnectionService:
 
 class LocationService:
     @staticmethod
-    def retrieve(location_id) -> Location:
-        location, coord_text = (
-            db.session.query(Location, Location.coordinate.ST_AsText())
-            .filter(Location.id == location_id)
-            .one()
+    def get_locations(person_id, start_date, end_date):
+        channel = grpc.insecure_channel('location-service:50051')
+        stub = location_pb2_grpc.LocationServiceStub(channel)
+
+        request = location_pb2.LocationRequest(
+            person_id=person_id,
+            start_date=str(start_date),
+            end_date=str(end_date)
         )
 
-        # Rely on database to return text form of point to reduce overhead of conversion in app code
-        location.wkt_shape = coord_text
-        return location
+        response = stub.GetLocations(request)
+        return response.locations
 
     @staticmethod
     def create(location: Dict) -> Location:
